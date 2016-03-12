@@ -1,0 +1,19 @@
+{
+  "name": "ka-js-project",
+  "version": "1.0.0",
+  "description": "A project for KA",
+  "main": "challenge-analyzer.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delphinefoo/ka-challenge-analyzer.git"
+  },
+  "author": "Delphine Foo-Matkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/delphinefoo/ka-challenge-analyzer/issues"
+  },
+  "homepage": "https://github.com/delphinefoo/ka-challenge-analyzer#readme"
+}
