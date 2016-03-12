@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/delphinefoo/ka-challenge-analyzer/issues"
   },
-  "homepage": "https://github.com/delphinefoo/ka-challenge-analyzer#readme"
+  "homepage": "https://github.com/delphinefoo/ka-challenge-analyzer#readme",
+  "dependencies": {
+    "esprima": "^2.7.2",
+    "jquery": "^1.12.1",
+    "normalize.css": "^3.0.3"
+  }
 }
