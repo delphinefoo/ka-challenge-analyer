@@ -9,19 +9,19 @@ Tester.prototype.required = function(construct) {
   switch (construct) {
     case 'for':
       target = 'ForStatement';
-      string = 'for loop';
+      string = 'a "for loop"';
       break;
     case 'while':
       target = 'WhileStatement';
-      string = 'while loop';
+      string = 'a "while loop"';
       break;
     case 'if':
       target = 'IfStatement';
-      string = 'if statement';
+      string = 'an "if statement"';
       break;
     case 'variable':
       target = 'VariableDeclaration';
-      string = 'variable declaration';
+      string = 'a "variable declaration"';
       break;
   }
 
@@ -35,19 +35,19 @@ Tester.prototype.banned = function(construct) {
   switch (construct) {
     case 'for':
       target = 'ForStatement';
-      string = 'for loop';
+      string = 'a for loop';
       break;
     case 'while':
       target = 'WhileStatement';
-      string = 'while loop';
+      string = 'a while loop';
       break;
     case 'if':
       target = 'IfStatement';
-      string = 'if statement';
+      string = 'an if statement';
       break;
     case 'variable':
       target = 'VariableDeclaration';
-      string = 'variable declaration';
+      string = 'a variable declaration';
       break;
   }
 
@@ -61,7 +61,7 @@ Tester.prototype.nested = function(outerConstruct, innerConstruct) {
 };
 
 Tester.prototype.findRequired = function(string) {
-  var whitelistString = 'This program MUST use a ';
+  var whitelistString = 'This program MUST use ';
   var parsedInputHash = {};
   var whitelistErrors = [];
   var allErrorMessages = [];
@@ -86,7 +86,7 @@ Tester.prototype.findRequired = function(string) {
     if (j === 0) {
       whitelistString += whitelistErrors[0];
     } else {
-      whitelistString += ' and a ' + whitelistErrors[i];
+      whitelistString += ' and ' + whitelistErrors[j];
     }
   }
 
