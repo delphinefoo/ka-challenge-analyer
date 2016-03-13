@@ -1,16 +1,15 @@
 $(function() {
   var tester = new Tester;
-  // tester.required('for');
-  // tester.required('if');
-  // tester.banned('while');
-  // tester.banned('variable');
-  tester.nested('while', 'if');
+  tester.required('while');
+  tester.required('if');
+  tester.banned('variable');
+  // tester.nested('while', 'if');
 
   $('#answer').on('keyup', function() {
     var answer = $('#answer').val();
     var whitelistError = tester.findRequired(answer) || null;
     var blacklistError = tester.findBanned(answer) || null;
-    var nestedError = tester.findNested(answer) || null;
+    // var nestedError = tester.findNested(answer) || null;
 
     $('#message ul').empty();
     if (whitelistError || blacklistError || nestedError) {
@@ -31,9 +30,9 @@ $(function() {
       $('#message ul').append('<li>' + blacklistError + '</li>');
     }
 
-    if (nestedError && nestedError !== null) {
-      $('#message ul').append('<li>' + nestedError + '</li>');
-    }
+    // if (nestedError && nestedError !== null) {
+    //   $('#message ul').append('<li>' + nestedError + '</li>');
+    // }
   });
 
 });

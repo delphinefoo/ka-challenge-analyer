@@ -84,13 +84,16 @@ Tester.prototype.findNested = function(string) {
         return null;
       }
     } else if (this._outer[0] === 'WhileStatement' || this._outer[0] === 'ForStatement') {
+      console.log(this._ast.body[idx].body, idx);
       if (this._checkBody(this._ast.body[idx].body, this._inner[0])) {
         //this means that nested construct exists
         //so return null
+        console.log('inside inner checkBody');
         return null;
       }
     }
   }
+  console.log(this._ast);
   return nestedStr + this._outer[1] + connectionStr + this._inner[1];
 }
 
