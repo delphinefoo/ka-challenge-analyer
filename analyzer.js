@@ -1,17 +1,19 @@
 $(function() {
   var tester = new Tester;
-  tester.required('for');
-  tester.required('if');
-  tester.banned('while');
-  tester.banned('variable');
+  // tester.required('for');
+  // tester.required('if');
+  // tester.banned('while');
+  // tester.banned('variable');
+  tester.nested('while', 'if');
 
   $('#answer').on('keyup', function() {
     var answer = $('#answer').val();
-    var whitelistError = tester.findRequired(answer);
-    var blacklistError = tester.findBanned(answer);
+    var whitelistError = tester.findRequired(answer) || null;
+    var blacklistError = tester.findBanned(answer) || null;
+    var nestedError = tester.findNested(answer) || null;
 
     $('#message ul').empty();
-    if (whitelistError || blacklistError) {
+    if (whitelistError || blacklistError || nestedError) {
       $('#message').addClass('error');
       $('#message').removeClass('success');
     } else {
@@ -21,12 +23,16 @@ $(function() {
     }
 
 
-    if (whitelistError !== null) {
+    if (whitelistError && whitelistError !== null) {
       $('#message ul').append('<li>' + whitelistError + '</li>');
     }
 
-    if (blacklistError !== null) {
+    if (blacklistError && blacklistError !== null) {
       $('#message ul').append('<li>' + blacklistError + '</li>');
+    }
+
+    if (nestedError && nestedError !== null) {
+      $('#message ul').append('<li>' + nestedError + '</li>');
     }
   });
 

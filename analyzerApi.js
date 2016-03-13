@@ -1,7 +1,14 @@
 var Tester = function() {
-
   this._whitelist = [];
   this._blacklist = [];
+
+  /*
+  Constructs available:
+  - for loop
+  - while loop
+  - if statement
+  - variable declaration
+  */
   this._possibilities = {
     for:      {
                name: 'ForStatement',
@@ -19,129 +26,81 @@ var Tester = function() {
                name: 'VariableDeclaration',
                string: 'a \'variable declaration\''
               }
-
   };
-}
-
-this.ast, this.target, this.parsedInputHash, this.outer, this.inner;
-/*
-Constructs available:
-- for loop
-- while loop
-- if statement
-- variable declaration
-*/
+};
 
 
 
-
-
-// var checkFor = function(construct) {
-//   target = {};
-//   //check for different construct types
-//   switch (construct) {
-//     case 'for':
-//       target.name = 'ForStatement';
-//       target.string = 'a \'for loop\'';
-//       break;
-//     case 'while':
-//       target.name = 'WhileStatement';
-//       target.string = 'a \'while loop\'';
-//       break;
-//     case 'if':
-//       target.name = 'IfStatement';
-//       target.string = 'an \'if statement\'';
-//       break;
-//     case 'variable':
-//       target.name = 'VariableDeclaration';
-//       target.string = 'a \'variable declaration\'';
-//       break;
-//   }
-// }
-
-var checkBody = function(array, target) {
+Tester.prototype._checkBody = function(array, target) {
   if (array.body && array.body.length) {
     for (var i = 0; i < array.body.length; i++) {
       if (array.body[i].type === target) {
-        return true;
+        return [true, i];
       }
     }
   }
   return false;
 };
 
-Tester.prototype.parseInput = function(input) {
+Tester.prototype._parseInput = function(input) {
   this._ast = esprima.parse(input, {sourceType: 'script'});
-  // parsedInputHash = {};
-  // for (var i = 0; i < array.length; i++) {
-  //   parsedInputHash[array[i].type] = true;
-  //   if (array[i].type === 'IfStatement') {
-
-  //   }
-  // }
-  // checkBody(ast.body);
-}
-
-
+};
 
 Tester.prototype.required = function(constructType) {
-  // checkFor(constructType);
-
   this._whitelist[this._possibilities[constructType].name] = this._possibilities[constructType].string;
 };
 
 Tester.prototype.banned = function(constructType) {
-  // checkFor(constructType);
-  // this._blacklist[target.name] = target.string;
   this._blacklist[this._possibilities[constructType].name] = this._possibilities[constructType].string;
 
 };
 
-
 Tester.prototype.nested = function(outerConstruct, innerConstruct) {
-  outer = [];
-  inner = [];
+  this._outer = [];
+  this._inner = [];
 
-  outer[0] = this._possibilities[outerConstruct][name];
-  outer[1] = this._possibilities[outerConstruct][string];
+  this._outer[0] = this._possibilities[outerConstruct]['name'];
+  this._outer[1] = this._possibilities[outerConstruct]['string'];
 
-  inner[0] = this._possibilities[innerConstruct][name];
-  inner[1] = this._possibilities[innerConstruct][string];
+  this._inner[0] = this._possibilities[innerConstruct]['name'];
+  this._inner[1] = this._possibilities[innerConstruct]['string'];
 };
 
 Tester.prototype.findNested = function(string) {
-  var nestedString = 'There should be ';
-  var connectionString = ' and inside of it there should be';
-  this.parseInput(string);
+  var idx;
+  var nestedStr = 'There should be ';
+  var connectionStr = ' and inside of it there should be ';
+  this._parseInput(string);
 
   //check for presence of outer statement
-  if (this.parsedInputHash[outer[0]]) {
-    //check for inner statement
-    if (outer[0] === 'IfStatement') {
-      for (var i = 0; i < parsedInputHash[outer[0]].consequent.body.length; i++) {
-        if(parsedInputHash[outer[0]].consequent.body[i].type === inner[0]) {
-          return null;
-        }
+  if (this._checkBody(this._ast, this._outer[0])) {
+    idx = this._checkBody(this._ast, this._outer[0])[1];
+    //check for outer if statement
+    if (this._outer[0] === 'IfStatement') {
+      //check for inner statement in consequent's body array
+      if (this._checkBody(this._ast.body[idx].consequent, this._inner[0])) {
+        //this means that nested construct exists
+        //so return null
+        return null;
       }
-    } else if (outer[0] === 'WhileStatement' || outer[0] === 'ForStatement') {
-      //loop through body array
-      for (var i = 0; i < parsedInputHash[outer[0]].consequent.body.length; i++) {
-        if(parsedInputHash[outer[0]].consequent.body[i].type === inner[0]) {
-          return null;
-        }
+    } else if (this._outer[0] === 'WhileStatement' || this._outer[0] === 'ForStatement') {
+      if (this._checkBody(this._ast.body[idx].body, this._inner[0])) {
+        //this means that nested construct exists
+        //so return null
+        return null;
       }
     }
-
   }
+  return nestedStr + this._outer[1] + connectionStr + this._inner[1];
 }
 
 Tester.prototype.findRequired = function(string) {
   var whitelistString = 'This program MUST use ';
   var whitelistErrors = [];
-  this.parseInput(string);
+  this._parseInput(string);
 
   for (var key in this._whitelist) {
-    if (!checkBody(this._ast, key)) {
+    if (!this._checkBody(this._ast, key)) {
       whitelistErrors.push(this._whitelist[key]);
     }
   }
@@ -165,13 +124,12 @@ Tester.prototype.findRequired = function(string) {
 Tester.prototype.findBanned = function(string) {
   var blacklistString = 'This program MUST NOT use ';
   var blacklistErrors = [];
-  //parse the string
-  this.parseInput(string);
+  this._parseInput(string);
 
   //loop through blacklist items
   for (var key in this._blacklist) {
     //if the items in whitelist are not found in parsed input
-    if (checkBody(this._ast, key)) {
+    if (this._checkBody(this._ast, key)) {
       //add item to error message
       blacklistErrors.push(this._blacklist[key]);
     }
@@ -191,8 +149,4 @@ Tester.prototype.findBanned = function(string) {
   } else {
     return null;
   }
-};
-
-Tester.prototype.findNested = function(string) {
-  parseInput(string);
 };
