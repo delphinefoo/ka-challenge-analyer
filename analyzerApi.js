@@ -138,16 +138,12 @@ Tester.prototype.findNested = function(string) {
 Tester.prototype.findRequired = function(string) {
   var whitelistString = 'This program MUST use ';
   var whitelistErrors = [];
-  console.log('in findRequired: ', this._whitelist);
   this.parseInput(string);
-  //loop through whitelist items
+
   for (var key in this._whitelist) {
-    //if the items in whitelist are not found in parsed input
     if (!checkBody(this._ast, key)) {
       whitelistErrors.push(this._whitelist[key]);
     }
-    // if (!parsedInputHash[key]) {
-      //add item to error message
   }
 
   //produce the final string to print for whitelist errors
@@ -175,7 +171,7 @@ Tester.prototype.findBanned = function(string) {
   //loop through blacklist items
   for (var key in this._blacklist) {
     //if the items in whitelist are not found in parsed input
-    if (parsedInputHash[key]) {
+    if (checkBody(this._ast, key)) {
       //add item to error message
       blacklistErrors.push(this._blacklist[key]);
     }
