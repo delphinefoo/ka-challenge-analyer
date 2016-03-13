@@ -9,7 +9,9 @@ To install dependencies, run:
 ```
 npm install
 ```
-To view an example implementation, open the analyzer.html file in your browser.
+##Example
+To view an example implementation, open the analyzer.html file in your browser.<br>
+The example implementation in analyzerExample.js has a whitelist that contains a 'while' loop and an 'if' statement, a blacklist that contains a 'variable' declaration, and also looks for an 'if' statement nested inside of a 'for' loop.
 
 ##API
 
@@ -67,6 +69,3 @@ tester.findNested(<em>input string</em>);
 </pre>
 *.findNested* returns an error string if the nesting is not present, eg.
 "There should be a 'while loop' and inside of it there should be an 'if statement'". Returns null if nested construct is found.
-
-##Example
-The example implementation in analyzerExample.js has a whitelist that contains 'while' loop and 'if' statement, a blacklist that contains 'variable' declaration, and also looks for an 'if' statement nested inside of a 'for' loop.
