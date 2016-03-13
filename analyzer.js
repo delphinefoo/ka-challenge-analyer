@@ -1,14 +1,14 @@
 $(function() {
-
+  var tester = new Tester;
+  tester.required('for');
   $('#answer').on('keyup', function() {
     var answer = $('#answer').val();
-    //check if answer contains whitelist items
-
-    //check that answer does not contain blacklist items
-
-    //display the error messages below
-
-    console.log(JSON.stringify(esprima.parse(answer), null, 4));
+    var whitelistError = tester.findRequired(answer);
+    var blacklistError = test.findBanned(answer);
+    $('#error ul').empty();
+    if (whitelistError !== null) {
+      $('#error ul').append('<li>' + whitelistError + '</li>');
+    }
   });
 
 });
