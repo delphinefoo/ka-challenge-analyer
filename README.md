@@ -69,4 +69,4 @@ tester.findNested(<em>input string</em>);
 "There should be a 'while loop' and inside of it there should be an 'if statement'". Returns null if nested construct is found.
 
 ##Example
-The example implementation in analyzerExample.js has a whitelist that contains 'while' loop and 'if' statement, and a blacklist that contains 'variable' declaration.
+The example implementation in analyzerExample.js has a whitelist that contains 'while' loop and 'if' statement, a blacklist that contains 'variable' declaration, and also looks for an 'if' statement nested inside of a 'for' loop.
