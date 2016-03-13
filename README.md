@@ -4,7 +4,11 @@ An API for testing JavaScript code for the presence of specific constructs.
 
 ##Usage
 
-Dependencies: Esprima parser, jQuery, and normalize.css.
+Dependencies:<br>
++ Esprima parser 2.7.2
++ jQuery 1.12.1
++ normalize.css 3.0.3
+
 To install dependencies, run:
 ```
 npm install

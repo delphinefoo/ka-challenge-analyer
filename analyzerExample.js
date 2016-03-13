@@ -12,6 +12,7 @@ $(function() {
     var nestedError = tester.findNested(answer) || null;
 
     $('#message ul').empty();
+
     if (whitelistError || blacklistError || nestedError) {
       $('#message').addClass('error');
       $('#message').removeClass('success');
@@ -20,7 +21,6 @@ $(function() {
       $('#message').removeClass('error');
       $('#message ul').append('<li>Good job!</li>');
     }
-
 
     if (whitelistError && whitelistError !== null) {
       $('#message ul').append('<li>' + whitelistError + '</li>');
