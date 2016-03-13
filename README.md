@@ -1,6 +1,6 @@
 # Code Challenge Analyzer
 
-An API for testing JavaScript code for the presence of specific constructs
+An API for testing JavaScript code for the presence of specific constructs.
 
 ##Usage
 
@@ -9,6 +9,7 @@ To install dependencies, run:
 ```
 npm install
 ```
+To view an example implementation, open the analyzer.html file in your browser.
 
 ##API
 
@@ -33,7 +34,7 @@ To analyze code using the whitelist:
 <pre>
 tester.findRequired(<em>input string</em>);
 </pre>
-Returns an error string if the constructs in the whitelist are not found, eg. "The program MUST  use an 'if statement'.". Returns null if whitelist constructs are present.
+*.findRequired* eturns an error string if the constructs in the whitelist are not found, eg. "The program MUST  use an 'if statement'.". Returns null if whitelist constructs are present.
 
 ####Blacklist
 
@@ -48,7 +49,7 @@ To analyze code using the blacklist:
 <pre>
 tester.findBanned(<em>input string</em>);
 </pre>
-Returns an error string if the constructs in the blacklist are present, eg.
+*.findBanned* returns an error string if the constructs in the blacklist are present, eg.
 "The program MUST NOT use an 'if statement'.". Returns null if blacklist constructs are not present.
 
 ####Nested constructs
@@ -64,7 +65,7 @@ To analyze code for nested constructs, call:
 <pre>
 tester.findNested(<em>input string</em>);
 </pre>
-Returns an error string if the nesting is not present, eg.
+*.findNested* returns an error string if the nesting is not present, eg.
 "There should be a 'while loop' and inside of it there should be an 'if statement'". Returns null if nested construct is found.
 
 ##Example
